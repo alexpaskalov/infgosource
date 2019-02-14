@@ -76,6 +76,24 @@ JS;
 
 $this->registerJs($js);
 
+$this->registerCss(
+    "
+    .infosource__ul{
+        list-style: none;
+    }
+    .infosource__li{
+        padding: 10px 0;
+    }
+    .infosource__li__li{
+        border-bottom: 1px solid #eee;       
+    }
+    .infosource__link{
+        display:inline-block;
+        color: #fa0000;
+    }
+    
+    ");
+
 
         echo Html::ul($tree, [
             'item' => function($item, $index) {
@@ -84,12 +102,14 @@ $this->registerJs($js);
                 '<a href="" data-toggle="modal" data-target="#gifmodal">'. $index. '</a>' .
                 Html::ul($item, [
                     'item' => function($subitem, $subindex){
-                    return '<li><a href="" data-toggle="modal" data-target="#gifmodal">'. $subitem. '</a></li>';
-                    }
+                    return '<li class="infosource__li__li"><a class="infosource__link" href="" data-toggle="modal" data-target="#gifmodal">'. $subitem. '</a></li>';
+                    },
+                    'class' => 'infosource__ul'
                 ]),
-                ['class' => 'post']
+                ['class' => 'infosource__li']
             );
-        }]
+        },
+                'class' => 'infosource__ul']
         );
 
 ?>
