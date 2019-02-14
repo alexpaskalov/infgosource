@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\ModalForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -9,6 +10,9 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use yii\widgets\ActiveForm;
+use GPH;
+
 
 class SiteController extends Controller
 {
@@ -124,5 +128,47 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionTree()
+    {
+        $this->view->title =  'Tree Yii2 Application for Infosource';
+
+
+        $tree = [];
+        $nodes1 = range(1,100,1);
+        $max = 10;
+        foreach ($nodes1 as $node) {
+            $tree[$node] = range(1, rand(1,$max), 1);
+        }
+
+        $model = new ModalForm();
+
+        return $this->render('tree', ['model' => $model,
+            'tree' => $tree
+        ]);
+
+
+    }
+
+    public function actionModal()
+    {
+        $form_model = new ModalForm();
+        if(\Yii::$app->request->isAjax){
+            $api_instance = new GPH\Api\DefaultApi();
+            $api_key = "dc6zaTOxFJmzC"; // string | Giphy API Key.
+
+            try {
+                $result = $api_instance->gifsRandomGet($api_key);
+            } catch (Exception $e) {
+                echo 'Exception when calling DefaultApi->gifsRandomGet: ', $e->getMessage(), PHP_EOL;
+            }
+
+            return $result->getData()->getImageUrl();
+        }
+        if($form_model->load(\Yii::$app->request->post())){
+            var_dump($form_model);
+        }
+        return $this->render('page', compact('form_model'));
     }
 }

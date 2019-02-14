@@ -1,3 +1,24 @@
+
+ 
+#### Run project:  
+composer install 
+***
+composer update
+***
+php yii serve 
+
+#### Page 
+/web/index.php?r=site/tree
+***
+or 
+***
+/index.php?r=site/tree
+
+-----------------------------------
+
+ 
+
+
 <p align="center">
     <a href="https://github.com/yiisoft" target="_blank">
         <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
